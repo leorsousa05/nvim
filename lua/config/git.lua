@@ -47,6 +47,7 @@ function M.open_git_modal()
           vim.ui.input({ prompt = "Enter branch name: " }, function(input)
             if input and #input > 0 then
               vim.cmd("Git checkout -b" .. input)  
+              vim.cmd("Git branch -m" .. input)  
             else
               print("No branch name provided")
             end
