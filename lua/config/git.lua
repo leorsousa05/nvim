@@ -22,7 +22,7 @@ function M.open_git_modal()
       results = git_commands,
       entry_maker = function(entry)
         return {
-          value = entry.command,  -- Armazenamos o comando ou identificador
+          value = entry.command,  
           display = entry.display,
           ordinal = entry.display,
         }
@@ -34,7 +34,7 @@ function M.open_git_modal()
         local selection = require("telescope.actions.state").get_selected_entry()
         actions.close(prompt_bufnr)
         
-        -- Tratamento dos comandos especiais
+        
         if selection.value == ":set_origin" then
           vim.ui.input({ prompt = "Enter remote URL: " }, function(input)
             if input and #input > 0 then
@@ -46,13 +46,13 @@ function M.open_git_modal()
         elseif selection.value == ":set_branch" then
           vim.ui.input({ prompt = "Enter branch name: " }, function(input)
             if input and #input > 0 then
-              vim.cmd("Git checkout -b" .. input)  -- -b para criar se não existir
+              vim.cmd("Git checkout -b" .. input)  
             else
               print("No branch name provided")
             end
           end)
         else
-          -- Executa comandos Git normais
+          
           vim.cmd(selection.value)
         end
       end)
