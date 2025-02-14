@@ -1,79 +1,63 @@
-local nvim_lsp = require('lspconfig')
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
+local lsp = require('lspconfig')
+local cmp = require('cmp_nvim_lsp')
+local capabilities = cmp.default_capabilities()
+
 
 local servers = {
-  "ts_ls",
+  "intelephense", 
+  "ts_ls",     
+  "pyright",      
+  "gopls",        
   "rust_analyzer",
-  "pylsp",
-  "cssls",
-  "lua_ls",
-  "emmet_ls",
-  "html",
-  "prismals",
-  "jdtls",
-  "tailwindcss",
-  "intelephense",
-  "jsonls",
-  "svelte",
+  "solargraph",   
+  "lua_ls",  
+  "html",         
+  "cssls",        
+  "tailwindcss",  
+  "jsonls",       
+  "dockerls",     
+  "bashls",       
+  "marksman",     
 }
 
+
 for _, server in ipairs(servers) do
-  local config = {
+  lsp[server].setup({
+    on_attach = on_attach,
     capabilities = capabilities,
-    on_attach = function(client, bufnr)
-      -- Exemplo de keymap para ir à definição
-      vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', { noremap = true, silent = true })
-    end,
-    settings = {
-      python = {
-        analysis = {
-          autoSearchPaths = true,
-          diagnosticMode = "openFilesOnly",
-          useLibraryCodeForTypes = true,
-        },
-      },
-      html = {
-        format = {
-          wrapLineLength = 120,
-        },
-        filetypes = { "html", "blade", "php" },
-      },
-      emmet_ls = {
-        filetypes = {
-          "html", "css", "php", "javascript", "typescriptreact", "javascriptreact", "vue",
-        },
-        init_options = {
-          html = {
-            options = {
-              ["bem.enabled"] = true,
-            },
-          },
-        },
-      },
-    },
-  }
-
-  if server == "intelephense" then
-    config.cmd = { "intelephense", "--stdio" }
-    config.root_dir = nvim_lsp.util.root_pattern("composer.json", ".git", "artisan")
-    config.filetypes = { "php", "blade" }
-    config.settings.intelephense = vim.tbl_deep_extend("force", config.settings.intelephense or {}, {
-      files = {
-        maxSize = 5000000,
-      },
-      stubs = {
-        "apache", "bcmath", "bz2", "calendar", "Core", "ctype", "curl",
-        "date", "dba", "dom", "enchant", "exif", "fileinfo", "filter",
-        "ftp", "gd", "getopt", "hash", "iconv", "imap", "intl", "json",
-        "ldap", "libxml", "mbstring", "mysqli", "mysql", "openssl",
-        "pcntl", "pcre", "PDO", "pdo_mysql", "pdo_pgsql", "Phar", "posix",
-        "readline", "recode", "reflection", "session", "SimpleXML", "soap",
-        "sockets", "sodium", "SPL", "sqlite3", "standard", "tokenizer",
-        "xml", "xmlreader", "xmlrpc", "xmlwriter", "xsl", "zip", "zlib"
-      },
-    })
-  end
-
-  nvim_lsp[server].setup(config)
+  })
 end
 
+
+lsp.lua_ls.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+  settings = {
+    Lua = {
+      runtime = {
+        version = 'LuaJIT',
+      },
+      diagnostics = {
+        globals = { 'vim' },
+      },
+      workspace = {
+        library = vim.api.nvim_get_runtime_file("", true),
+      },
+      telemetry = {
+        enable = false,
+      },
+    },
+  },
+})
+
+
+vim.diagnostic.config({
+  virtual_text = true,
+  signs = true,
+  update_in_insert = false,
+  underline = true,
+  severity_sort = true,
+  float = {
+    source = "always",
+  },
+})
