@@ -12,6 +12,8 @@ function M.open_git_modal()
     { display = "󰊢 Git Push", command = "Git push" },
     { display = "󰊢 Git Pull", command = "Git pull" },
     { display = "󰊢 Git Init", command = "Git init" },
+    { display = "󰊢 Git Add Origin", command = "GitAddOrigin" },
+    { display = "󰊢 Git Set Branch", command = "GitSetBranch" },
   }
 
   pickers.new({}, {
@@ -31,7 +33,25 @@ function M.open_git_modal()
       actions.select_default:replace(function()
         local selection = require("telescope.actions.state").get_selected_entry()
         actions.close(prompt_bufnr)
-        vim.cmd(selection.value)
+        if selection.value == "GitAddOrigin" then
+          vim.ui.input({ prompt = "Enter remote URL: " }, function(input)
+            if input and #input > 0 then
+              vim.cmd("Git remote add origin " .. input)
+            else
+              print("No URL provided")
+            end
+          end)
+        elseif selection.value == "GitSetBranch" then
+          vim.ui.input({ prompt = "Enter branch name: " }, function(input)
+            if input and #input > 0 then
+              vim.cmd("Git checkout " .. input)
+            else
+              print("No branch name provided")
+            end
+          end)
+        else
+          vim.cmd(selection.value)
+        end
       end)
       return true
     end,
