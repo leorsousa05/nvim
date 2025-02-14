@@ -12,8 +12,8 @@ function M.open_git_modal()
     { display = "󰊢 Git Push", command = "Git push" },
     { display = "󰊢 Git Pull", command = "Git pull" },
     { display = "󰊢 Git Init", command = "Git init" },
-    { display = "󰊢 Git Add Origin", command = "GitAddOrigin" },
-    { display = "󰊢 Git Set Branch", command = "GitSetBranch" },
+    { display = "󰜂 Set Git Origin", command = ":set_origin" },
+    { display = "󰘔 Set Git Branch", command = ":set_branch" },
   }
 
   pickers.new({}, {
@@ -22,7 +22,7 @@ function M.open_git_modal()
       results = git_commands,
       entry_maker = function(entry)
         return {
-          value = entry.command,
+          value = entry.command,  -- Armazenamos o comando ou identificador
           display = entry.display,
           ordinal = entry.display,
         }
@@ -33,7 +33,9 @@ function M.open_git_modal()
       actions.select_default:replace(function()
         local selection = require("telescope.actions.state").get_selected_entry()
         actions.close(prompt_bufnr)
-        if selection.value == "GitAddOrigin" then
+        
+        -- Tratamento dos comandos especiais
+        if selection.value == ":set_origin" then
           vim.ui.input({ prompt = "Enter remote URL: " }, function(input)
             if input and #input > 0 then
               vim.cmd("Git remote add origin " .. input)
@@ -41,15 +43,16 @@ function M.open_git_modal()
               print("No URL provided")
             end
           end)
-        elseif selection.value == "GitSetBranch" then
+        elseif selection.value == ":set_branch" then
           vim.ui.input({ prompt = "Enter branch name: " }, function(input)
             if input and #input > 0 then
-              vim.cmd("Git checkout " .. input)
+              vim.cmd("Git checkout -b" .. input)  -- -b para criar se não existir
             else
               print("No branch name provided")
             end
           end)
         else
+          -- Executa comandos Git normais
           vim.cmd(selection.value)
         end
       end)
@@ -59,4 +62,3 @@ function M.open_git_modal()
 end
 
 return M
-
