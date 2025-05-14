@@ -16,4 +16,4 @@ require("nvim-autopairs").setup {
     ignored_next_char = "[%w%.]", -- Ignora caracteres específicos
 }
 
-vim.cmd('colorscheme tokyonight')
+vim.cmd('colorscheme gruvbox')

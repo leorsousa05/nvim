@@ -8,7 +8,6 @@ local ensure_packer = function()
 	end
 	return false
 end
-
 local packer_bootstrap = ensure_packer()
 
 vim.cmd([[
@@ -80,6 +79,8 @@ require('packer').startup(function(use)
 			require("nvim-autopairs").setup {}
 		end
 	}
+
+	use { "ellisonleao/gruvbox.nvim" }
 
 
 	if packer_bootstrap then
