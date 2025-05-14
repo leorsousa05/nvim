@@ -17,7 +17,7 @@ Este repositório contém a configuração pessoal do Neovim, utilizando `packer
 1. Clone este repositório na sua pasta de configuração do Neovim:
    ```bash
    git clone https://seu-repo.git ~/.config/nvim
-````
+    ````
 
 2. Abra o Neovim e execute:
 
