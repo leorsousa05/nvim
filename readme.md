@@ -1,4 +1,3 @@
-````markdown
 # Neovim Configuration
 
 Este repositório contém a configuração pessoal do Neovim, utilizando `packer.nvim` como gerenciador de plugins.
@@ -33,7 +32,6 @@ Este repositório contém a configuração pessoal do Neovim, utilizando `packer
    ```vim
    :TSUpdate
    ```
-
 ---
 
 ## 🔍 Estrutura principal
@@ -112,5 +110,3 @@ Este projeto está licenciado sob a [MIT License](LICENSE).
 #### Boa codificação! 🚀
 
 ```
-```
-
