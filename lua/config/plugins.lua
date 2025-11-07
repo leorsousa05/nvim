@@ -24,6 +24,9 @@ require('packer').startup(function(use)
 
 	use 'folke/tokyonight.nvim'
 
+	use 'mason-org/mason.nvim'
+	use 'mason-org/mason-lspconfig.nvim'
+
 	use {
 		"hrsh7th/nvim-cmp", -- Autocompletar
 		requires = {
@@ -40,8 +43,6 @@ require('packer').startup(function(use)
 		'nvim-treesitter/nvim-treesitter',
 		run = ':TSUpdate'
 	}
-
-	use 'jwalton512/vim-blade'
 
 	use 'nvim-lualine/lualine.nvim'
 
@@ -66,14 +67,6 @@ require('packer').startup(function(use)
 	use 'lewis6991/gitsigns.nvim'
 
 	use {
-		"nvim-treesitter/nvim-treesitter",
-		run = ":TSUpdate",
-		requires = {
-			{ "EmranMR/tree-sitter-blade" }, -- Parser Blade
-		},
-	}
-
-	use {
 		"windwp/nvim-autopairs",
 		config = function ()
 			require("nvim-autopairs").setup {}
@@ -81,6 +74,13 @@ require('packer').startup(function(use)
 	}
 
 	use { "ellisonleao/gruvbox.nvim" }
+
+	use {
+		"Exafunction/windsurf.nvim",
+		requires = {
+			"hrsh7th/nvim-cmp",
+		},
+	}
 
 
 	if packer_bootstrap then

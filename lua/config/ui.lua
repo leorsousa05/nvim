@@ -10,6 +10,8 @@ require('tokyonight').setup({
 
 vim.o.number = true
 vim.o.relativenumber = true
+vim.opt.shiftwidth = 4
+vim.opt.tabstop = 4
 
 require("nvim-autopairs").setup {
     enable_check_bracket_line = true, -- Não fecha pares se a linha estiver vazia

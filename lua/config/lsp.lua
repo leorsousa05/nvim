@@ -2,62 +2,49 @@ local lsp = require('lspconfig')
 local cmp = require('cmp_nvim_lsp')
 local capabilities = cmp.default_capabilities()
 
-
 local servers = {
-  "intelephense", 
-  "ts_ls",     
-  "pyright",      
-  "gopls",        
-  "rust_analyzer",
-  "solargraph",   
-  "lua_ls",  
-  "html",         
-  "cssls",        
-  "tailwindcss",  
-  "jsonls",       
-  "dockerls",     
-  "bashls",       
-  "marksman",     
+  "intelephense",
+  "ts_ls", -- 'ts_ls' está obsoleto, use 'tsserver'
+  "pyright",
+  "lua_ls",
+  "html",
+  "cssls",
+  "tailwindcss",
+  "jsonls",
+  "dockerls",
 }
 
+local on_attach = function(client, bufnr)
+  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-for _, server in ipairs(servers) do
-  lsp[server].setup({
-    on_attach = on_attach,
-    capabilities = capabilities,
-  })
 end
 
 
-lsp.lua_ls.setup({
-  on_attach = on_attach,
-  capabilities = capabilities,
-  settings = {
-    Lua = {
-      runtime = {
-        version = 'LuaJIT',
-      },
-      diagnostics = {
-        globals = { 'vim' },
-      },
-      workspace = {
-        library = vim.api.nvim_get_runtime_file("", true),
-      },
-      telemetry = {
-        enable = false,
-      },
-    },
-  },
-})
+require("mason").setup()
 
+require("mason-lspconfig").setup({
+  ensure_installed = servers,
 
-vim.diagnostic.config({
-  virtual_text = true,
-  signs = true,
-  update_in_insert = false,
-  underline = true,
-  severity_sort = true,
-  float = {
-    source = "always",
-  },
+  handlers = {
+    function(server_name)
+      lsp[server_name].setup({
+        on_attach = on_attach,
+        capabilities = capabilities,
+      })
+    end,
+
+    ["lua_ls"] = function()
+      lsp.lua_ls.setup({
+        on_attach = on_attach,
+        capabilities = capabilities,
+        settings = {
+          Lua = {
+            diagnostics = {
+              globals = { 'vim' },
+            },
+          },
+        },
+      })
+    end,
+  }
 })
