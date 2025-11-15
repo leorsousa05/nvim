@@ -14,8 +14,8 @@ vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
 
 require("nvim-autopairs").setup {
-    enable_check_bracket_line = true, -- Não fecha pares se a linha estiver vazia
-    ignored_next_char = "[%w%.]", -- Ignora caracteres específicos
+    enable_check_bracket_line = true,
+    ignored_next_char = "[%w%.]",
 }
 
-vim.cmd('colorscheme gruvbox')
+vim.cmd("colorscheme tokyonight")

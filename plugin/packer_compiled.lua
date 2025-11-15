@@ -94,6 +94,11 @@ _G.packer_plugins = {
     path = "C:\\Users\\leors\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\cmp-vsnip",
     url = "https://github.com/hrsh7th/cmp-vsnip"
   },
+  ["copilot.vim"] = {
+    loaded = true,
+    path = "C:\\Users\\leors\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\copilot.vim",
+    url = "https://github.com/github/copilot.vim"
+  },
   ["friendly-snippets"] = {
     loaded = true,
     path = "C:\\Users\\leors\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\friendly-snippets",
@@ -103,11 +108,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "C:\\Users\\leors\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\gitsigns.nvim",
     url = "https://github.com/lewis6991/gitsigns.nvim"
-  },
-  ["gruvbox.nvim"] = {
-    loaded = true,
-    path = "C:\\Users\\leors\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\gruvbox.nvim",
-    url = "https://github.com/ellisonleao/gruvbox.nvim"
   },
   ["lualine.nvim"] = {
     loaded = true,
@@ -175,6 +175,11 @@ _G.packer_plugins = {
     path = "C:\\Users\\leors\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\telescope.nvim",
     url = "https://github.com/nvim-telescope/telescope.nvim"
   },
+  ["toggleterm.nvim"] = {
+    loaded = true,
+    path = "C:\\Users\\leors\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\toggleterm.nvim",
+    url = "https://github.com/akinsho/toggleterm.nvim"
+  },
   ["tokyonight.nvim"] = {
     loaded = true,
     path = "C:\\Users\\leors\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\tokyonight.nvim",
@@ -189,11 +194,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "C:\\Users\\leors\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\vim-vsnip",
     url = "https://github.com/hrsh7th/vim-vsnip"
-  },
-  ["windsurf.nvim"] = {
-    loaded = true,
-    path = "C:\\Users\\leors\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\windsurf.nvim",
-    url = "https://github.com/Exafunction/windsurf.nvim"
   }
 }
 

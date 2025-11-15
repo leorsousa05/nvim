@@ -1,89 +1,136 @@
-local ensure_packer = function()
-	local fn = vim.fn
-	local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
+-- ============================================
+--  PACKER BOOTSTRAP
+-- ============================================
+
+local fn = vim.fn
+local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+
+local function ensure_packer()
 	if fn.empty(fn.glob(install_path)) > 0 then
-		fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
-		vim.cmd [[packadd packer.nvim]]
+		fn.system({
+			"git", "clone", "--depth", "1",
+			"https://github.com/wbthomason/packer.nvim",
+			install_path,
+		})
+		vim.cmd("packadd packer.nvim")
 		return true
 	end
 	return false
 end
+
 local packer_bootstrap = ensure_packer()
 
-vim.cmd([[
-augroup packer_user_config
-autocmd!
-autocmd BufWritePost lua/config/plugins.lua source <afile> | PackerSync
-augroup end
-]])
+-- ============================================
+--  AUTO RELOAD DO ARQUIVO DE PLUGINS
+-- ============================================
 
-require('packer').startup(function(use)
-	use 'wbthomason/packer.nvim'
+vim.api.nvim_create_augroup("packer_user_config", { clear = true })
+vim.api.nvim_create_autocmd("BufWritePost", {
+	group = "packer_user_config",
+	pattern = "lua/config/plugins.lua",
+	command = "source <afile> | PackerSync",
+})
 
-	use 'neovim/nvim-lspconfig'
+-- ============================================
+--  PACKER SETUP
+-- ============================================
 
-	use 'folke/tokyonight.nvim'
+return require("packer").startup(function(use)
+	-------------------------------------------------------
+	-- Packer pode gerenciar ele mesmo
+	-------------------------------------------------------
+	use("wbthomason/packer.nvim")
 
-	use 'mason-org/mason.nvim'
-	use 'mason-org/mason-lspconfig.nvim'
+	-------------------------------------------------------
+	-- LSP
+	-------------------------------------------------------
+	use("neovim/nvim-lspconfig")
+	use("mason-org/mason.nvim")
+	use("mason-org/mason-lspconfig.nvim")
 
-	use {
-		"hrsh7th/nvim-cmp", -- Autocompletar
+	-------------------------------------------------------
+	-- Temas
+	-------------------------------------------------------
+	use("folke/tokyonight.nvim")
+
+	-------------------------------------------------------
+	-- Autocomplete + Snippets
+	-------------------------------------------------------
+	use({
+		"hrsh7th/nvim-cmp",
 		requires = {
-			"hrsh7th/cmp-buffer", -- Completar do buffer
-			"hrsh7th/cmp-path",   -- Completar caminhos de arquivos
-			"hrsh7th/cmp-nvim-lsp", -- Completar do LSP
-			"hrsh7th/cmp-vsnip",  -- Integração com vsnip
-			"hrsh7th/vim-vsnip",  -- vsnip (snippets)
-			"rafamadriz/friendly-snippets", -- Snippets pré-configurados
+			"hrsh7th/cmp-buffer",
+			"hrsh7th/cmp-path",
+			"hrsh7th/cmp-nvim-lsp",
+			"hrsh7th/cmp-vsnip",
+			"hrsh7th/vim-vsnip",
+			"rafamadriz/friendly-snippets",
 		},
-	}
+	})
 
-	use {
-		'nvim-treesitter/nvim-treesitter',
-		run = ':TSUpdate'
-	}
+	-------------------------------------------------------
+	-- Treesitter
+	-------------------------------------------------------
+	use({
+		"nvim-treesitter/nvim-treesitter",
+		run = ":TSUpdate",
+	})
 
-	use 'nvim-lualine/lualine.nvim'
+	-------------------------------------------------------
+	-- UI: Statusline, bufferline, filetree, telescope
+	-------------------------------------------------------
+	use("nvim-lualine/lualine.nvim")
 
-	use {
-		'nvim-telescope/telescope.nvim',
-		requires = { {'nvim-lua/plenary.nvim'} }
-	}
+	use({
+		"nvim-telescope/telescope.nvim",
+		requires = { "nvim-lua/plenary.nvim" },
+	})
 
-	use {
-		'nvim-tree/nvim-tree.lua',
-		requires = {
-			'nvim-tree/nvim-web-devicons', 
-		},
-	}
+	use({
+		"nvim-tree/nvim-tree.lua",
+		requires = { "nvim-tree/nvim-web-devicons" },
+	})
 
-	use {
-		'akinsho/nvim-bufferline.lua',
-		requires = 'kyazdani42/nvim-web-devicons'
-	}
+	use({
+		"akinsho/nvim-bufferline.lua",
+		requires = "kyazdani42/nvim-web-devicons",
+	})
 
-	use 'tpope/vim-fugitive'
-	use 'lewis6991/gitsigns.nvim'
+	-------------------------------------------------------
+	-- Git
+	-------------------------------------------------------
+	use("tpope/vim-fugitive")
+	use("lewis6991/gitsigns.nvim")
 
-	use {
+	-------------------------------------------------------
+	-- Autopairs
+	-------------------------------------------------------
+	use({
 		"windwp/nvim-autopairs",
-		config = function ()
-			require("nvim-autopairs").setup {}
-		end
-	}
+		config = function()
+			require("nvim-autopairs").setup({})
+		end,
+	})
 
-	use { "ellisonleao/gruvbox.nvim" }
-
+	-------------------------------------------------------
+	-- Terminal
+	-------------------------------------------------------
 	use {
-		"Exafunction/windsurf.nvim",
-		requires = {
-			"hrsh7th/nvim-cmp",
-		},
+		"akinsho/toggleterm.nvim",
+		tag = '*',
 	}
 
 
+	-------------------------------------------------------
+	-- Autocomplete AI
+	-------------------------------------------------------
+	use "github/copilot.vim"
+
+	-------------------------------------------------------
+	-- Instalar ao bootstrapar
+	-------------------------------------------------------
 	if packer_bootstrap then
-		require('packer').sync()
+		require("packer").sync()
 	end
 end)
+
