@@ -36,22 +36,6 @@ cmp.setup({
 				fallback()
 			end
 		end, { 'i', 's' }),
-
-		['<Tab>'] = cmp.mapping(function(fallback)
-			if vim.fn["vsnip#jumpable"](1) == 1 then
-				vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>(vsnip-jump-next)", true, true, true), "")
-			else
-				fallback()
-			end
-		end, { 'i', 's' }),
-
-		['<S-Tab>'] = cmp.mapping(function(fallback)
-			if vim.fn["vsnip#jumpable"](-1) == 1 then
-				vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>(vsnip-jump-prev)", true, true, true), "")
-			else
-				fallback()
-			end
-		end, { 'i', 's' }),
 	},
 	sources = cmp.config.sources({
 		{ name = 'nvim_lsp' }, -- Completar do LSP
