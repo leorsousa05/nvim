@@ -1,17 +1,6 @@
-require("config.plugins")
-require("config.cmp")
-require("config.lsp")
-require("config.treesitter")
-require("config.lualine")
-require('config.telescope')
-require('config.ui')
+vim.opt.rtp:prepend(vim.fn.stdpath("data") .. "/lazy/lazy.nvim")
+vim.g.wildcat_java_home = "C:\\Program Files\\Java\\jdk-21"
+
+require("config.ui")
 require("config.mappings")
-require("config.nvimtree")
-require("config.tabline")
-require("config.terminal")
-require("config.copilot")
-
-vim.cmd [[
-  autocmd BufNewFile,BufRead *.blade.php set filetype=blade
-]]
-
+require("lazy").setup("plugins")
